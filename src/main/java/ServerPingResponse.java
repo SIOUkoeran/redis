@@ -19,21 +19,16 @@ public class ServerPingResponse {
 
     public static void multipleResponse(Socket socket) {
 
-        try (InputStream inputStream = socket.getInputStream()){
-            BufferedReader bufferedReader
-                    = new BufferedReader(
-                        new InputStreamReader(inputStream)
-            );
-            BufferedWriter bufferedWriter =
-                    new BufferedWriter(
-                            new OutputStreamWriter(socket.getOutputStream())
-                    );
-            String line = null;
-            System.out.println("Here");
-            while ((line = bufferedReader.readLine()) != null) {
-                bufferedWriter.write(response);
-                bufferedWriter.flush();
+        try {
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
+            while (inputStream.read() != -1) {
+                if (!socket.isClosed()) {
+                    outputStream.write(response.getBytes());
+                    outputStream.flush();
+                }else break;
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
