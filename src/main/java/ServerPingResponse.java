@@ -18,19 +18,21 @@ public class ServerPingResponse {
     }
 
     public static void multipleResponse(Socket socket) {
+            try {
+                InputStream inputStream = socket.getInputStream();
+                OutputStream outputStream = socket.getOutputStream();
+                byte[] buffer = new byte[1024];
+                while (inputStream.read(buffer) != -1) {
+                    if (socket.isConnected()) {
+                        outputStream.write(response.getBytes());
+                        outputStream.flush();
+                    }
+                    else break;
+                }
 
-        try {
-            InputStream inputStream = socket.getInputStream();
-            OutputStream outputStream = socket.getOutputStream();
-            while (inputStream.read() != -1) {
-                if (!socket.isClosed()) {
-                    outputStream.write(response.getBytes());
-                    outputStream.flush();
-                }else break;
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
