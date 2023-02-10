@@ -16,8 +16,11 @@ public class Main {
           serverSocket.setReuseAddress(true);
           // Wait for connection from client.
           clientSocket = serverSocket.accept();
-          ServerPingResponse.multipleResponse(clientSocket);
-          clientSocket.close();
+          while (clientSocket.isConnected())
+          {
+              new EventListener(clientSocket).start();
+              clientSocket = serverSocket.accept();
+          }
         } catch (IOException e) {
           System.out.println("IOException: " + e.getMessage());
         } finally {

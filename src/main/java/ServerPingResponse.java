@@ -29,7 +29,6 @@ public class ServerPingResponse {
                     }
                     else break;
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println(e.getMessage());
