@@ -21,7 +21,7 @@ public class CommandParser {
         List<String> commandList = bulkCommandParser(command);
         String command0 = commandList.get(0);
         if ("ECHO".equalsIgnoreCase(command0))
-            return CommandConst.echo(commandList);
+            return CommandConst.echo(commandList.get(1));
         else if ("PING".equalsIgnoreCase(command0))
             return CommandConst.ping();
         else return command0;
