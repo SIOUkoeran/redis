@@ -24,12 +24,8 @@ public class EventListener extends Thread {
                 String result;
                 if (socket.isConnected()) {
                     String s = toStringArray(buffer);
-                    s = s.split("\r\n")[2];
-                    if (s.startsWith("*") || s.contains("echo"))
+                    if (s.startsWith("*"))
                         result = CommandParser.commandParser(s);
-                    else if (s.trim().startsWith("echo") || s.trim().startsWith("ECHO")){
-                        result = CommandParser.commandParser(s);
-                    }
                     else
                         result = CommandParser.justPing();
                     socket.getOutputStream().write((result + "\r\n").getBytes());

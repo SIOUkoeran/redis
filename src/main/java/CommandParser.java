@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -9,7 +10,7 @@ public class CommandParser {
 
 
     private static List<String> bulkCommandParser(String command) {
-        return Arrays.stream(command.split(Pattern.quote("\\" + "r" + "\\" + "n")))
+        return Arrays.stream(command.split(Pattern.quote("\r\n")))
                 .filter(c ->
                         !c.trim().isEmpty() && !c.startsWith("*") &&
                                 !c.startsWith("$")
@@ -19,7 +20,10 @@ public class CommandParser {
     }
 
     public static String commandParser(String command) {
+        System.out.println(command);
         List<String> commandList = bulkCommandParser(command);
+        System.out.println(commandList);
+
         String command0 = commandList.get(0);
         if ("ECHO".equalsIgnoreCase(command0))
             return CommandConst.echo(commandList.get(1));
