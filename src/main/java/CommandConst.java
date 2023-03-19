@@ -13,7 +13,7 @@ public class CommandConst {
     }
 
     public static String echo(String commands) {
-        return "+" + commands;
+        return "+" + commands + "\r\n";
     }
 
     public static String ping() {

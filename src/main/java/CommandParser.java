@@ -14,7 +14,7 @@ public class CommandParser {
                         !c.trim().isEmpty() && !c.startsWith("*") &&
                                 !c.startsWith("$")
                 )
-//                .flatMap(s -> Arrays.stream(s.split(" ")))
+                .flatMap(s -> Arrays.stream(s.split(" ")))
                 .collect(Collectors.toList());
     }
 
