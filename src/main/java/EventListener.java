@@ -16,13 +16,22 @@ public class EventListener extends Thread {
     @Override
     public void run() {
         try {
+            System.out.println("listening");
             InputStream inputStream = socket.getInputStream();
             OutputStream outputStream = socket.getOutputStream();
             byte[] buffer = new byte[1024];
             while (inputStream.read(buffer) != -1) {
+                String result;
                 if (socket.isConnected()) {
-                    outputStream.write(response.getBytes());
-                    outputStream.flush();
+                    String s = toStringArray(buffer);
+                    s = s.split("\r\n")[2];
+                    if (s.startsWith("*"))
+                        result = CommandParser.commandParser(s);
+                    else
+                        result = CommandParser.justPing();
+                    socket.getOutputStream().write((result + "\r\n").getBytes());
+                    socket.getOutputStream().flush();
+                    buffer = new byte[1024];
                 }
                 else break;
             }
@@ -37,5 +46,9 @@ public class EventListener extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    private String toStringArray(byte[] buf) {
+        return new String(buf);
     }
 }
