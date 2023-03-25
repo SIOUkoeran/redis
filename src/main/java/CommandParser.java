@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -29,6 +28,12 @@ public class CommandParser {
             return CommandConst.echo(commandList.get(1));
         else if ("PING".equalsIgnoreCase(command0))
             return CommandConst.ping();
+        else if ("SET".equalsIgnoreCase(command0)) {
+            CommandConst.set(commandList.get(1), commandList.get(2));
+            return "+OK";
+        }
+        else if ("GET".equalsIgnoreCase(command0))
+            return "+" + CommandConst.get(commandList.get(1));
         else return command0;
     }
 

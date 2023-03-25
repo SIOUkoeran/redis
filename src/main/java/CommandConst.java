@@ -1,3 +1,5 @@
+import store.MemoryStore;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,5 +20,13 @@ public class CommandConst {
 
     public static String ping() {
         return "+" + commands.get(1);
+    }
+
+    public static void set(String key, String value) {
+        MemoryStore.set(key, value);
+    }
+
+    public static String get(String key) {
+        return MemoryStore.get(key);
     }
 }
