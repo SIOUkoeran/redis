@@ -28,7 +28,10 @@ public class EventListener extends Thread {
                         result = CommandParser.commandParser(s);
                     else
                         result = CommandParser.justPing();
-                    socket.getOutputStream().write((result + "\r\n").getBytes());
+                    if (result.equals("+-1"))
+                        socket.getOutputStream().write(("$-1\r\n").getBytes());
+                    else
+                        socket.getOutputStream().write((result + "\r\n").getBytes());
                     socket.getOutputStream().flush();
                     buffer = new byte[1024];
                 }

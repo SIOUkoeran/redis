@@ -10,10 +10,6 @@ public class CommandConst {
             Arrays.asList("ECHO", "PONG")
     );
 
-    private static void defaultCommandParser(String command) {
-
-    }
-
     public static String echo(String commands) {
         return "+" + commands + "\r\n";
     }
@@ -22,8 +18,16 @@ public class CommandConst {
         return "+" + commands.get(1);
     }
 
-    public static void set(String key, String value) {
-        MemoryStore.set(key, value);
+    public static void set(String key, String... valueOrOptions) {
+        if (valueOrOptions.length == 1)
+            MemoryStore.set(key, valueOrOptions[0]);
+        else if (valueOrOptions.length == 3) {
+            if (!valueOrOptions[1].equalsIgnoreCase("PX"))
+                throw new UnsupportedOperationException("지원되지 않는 옵션입니다.");
+            MemoryStore.set(key, valueOrOptions[0], valueOrOptions[2]);
+        }else {
+            throw new RuntimeException("INVALID SET COMMAND");
+        }
     }
 
     public static String get(String key) {

@@ -29,7 +29,7 @@ public class CommandParser {
         else if ("PING".equalsIgnoreCase(command0))
             return CommandConst.ping();
         else if ("SET".equalsIgnoreCase(command0)) {
-            CommandConst.set(commandList.get(1), commandList.get(2));
+            CommandConst.set(commandList.get(1), commandList.subList(2, commandList.size()).stream().toArray(String[]::new));
             return "+OK";
         }
         else if ("GET".equalsIgnoreCase(command0))
